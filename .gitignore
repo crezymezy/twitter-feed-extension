@@ -1,0 +1,15 @@
+# Local API state / runtime
+api_feed.json
+*.tmp
+
+# Python
+__pycache__/
+*.pyc
+
+# Archives
+*.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp

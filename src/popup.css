@@ -1,0 +1,52 @@
+* { box-sizing: border-box; }
+:root {
+  --bg: #15202b;
+  --panel: #1e2732;
+  --txt: #e7e9ea;
+  --muted: #8b98a5;
+  --blue: #1d9bf0;
+  --green: #00ba7c;
+  --red: #f4212e;
+  --border: #2f3336;
+}
+html, body {
+  margin: 0; padding: 0;
+  width: 380px; max-height: 560px;
+  color: var(--txt);
+  font: 13px/1.4 -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background:
+    linear-gradient(180deg, rgba(21,32,43,.60), rgba(21,32,43,.90)),
+    url('../icon.png') center/cover no-repeat fixed;
+}
+header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 2;
+  min-height: 84px;
+  background: linear-gradient(180deg, rgba(21,32,43,.30), rgba(21,32,43,.72));
+  backdrop-filter: blur(2px);
+}
+header h1 { font-size: 15px; margin: 0; text-shadow: 0 1px 6px rgba(0,0,0,.75); }
+button {
+  background: var(--panel); color: var(--txt); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 12px;
+}
+button:hover { border-color: var(--blue); }
+button.primary { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
+button.icon { padding: 4px 7px; }
+.bar { display: flex; gap: 6px; padding: 10px 12px; flex-wrap: wrap; }
+.meta { padding: 0 12px 8px; color: var(--muted); font-size: 11px; }
+ul { list-style: none; margin: 0; padding: 0 8px 10px; overflow: auto; max-height: 400px; }
+li {
+  padding: 8px 8px; border: 1px solid var(--border); border-radius: 10px;
+  margin: 6px 4px; background: rgba(30,39,50,.82); cursor: pointer;
+  backdrop-filter: blur(2px);
+}
+li:hover { border-color: var(--blue); }
+li .top { display: flex; justify-content: space-between; gap: 8px; }
+li .who { font-weight: 700; color: var(--txt); }
+li .age { color: var(--green); font-size: 11px; white-space: nowrap; }
+li .age.old { color: var(--muted); }
+li .txt { color: #cfd6dd; margin-top: 3px; word-break: break-word; }
+li .star { color: #ffd400; }
+.empty { color: var(--muted); padding: 16px 12px; text-align: center; }

@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "X Fresh Feed Tracker",
+  "version": "1.1.0",
+  "description": "Tracks very fresh X/Twitter posts (home feed or tracked accounts), forwards them to Telegram and exposes a live API. Ideal with a dedicated tracking account.",
+  "permissions": ["storage", "notifications", "alarms", "tabs"],
+  "host_permissions": [
+    "https://x.com/*",
+    "https://twitter.com/*",
+    "https://api.telegram.org/*",
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+  "background": { "service_worker": "src/background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://x.com/*", "https://twitter.com/*"],
+      "js": ["src/content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_title": "X Fresh Feed Tracker"
+  },
+  "options_page": "src/options.html",
+  "externally_connectable": {
+    "matches": ["http://localhost/*", "http://127.0.0.1/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icon.png", "icons/*"],
+      "matches": ["https://x.com/*", "https://twitter.com/*"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

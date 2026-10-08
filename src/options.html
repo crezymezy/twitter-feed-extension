@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>X Fresh Feed Tracker — Settings</title>
+  <style>
+    :root { --bg:#15202b; --panel:#1e2732; --txt:#e7e9ea; --muted:#8b98a5; --blue:#1d9bf0; --border:#2f3336; }
+    body { color: var(--txt); font: 14px/1.5 -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 0;
+      background: linear-gradient(180deg, rgba(21,32,43,.72), rgba(21,32,43,.94)), url('../icon.png') center/cover no-repeat fixed; }
+    .hero { position: relative; height: 150px; background: transparent; }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(21,32,43,0), rgba(21,32,43,.85)); }
+    .hero h1 { position: absolute; left: 24px; bottom: 16px; margin: 0; font-size: 24px; text-shadow: 0 2px 8px rgba(0,0,0,.6); }
+    .wrap { max-width: 680px; margin: 0 auto; padding: 0 20px 40px; }
+    .card { background: rgba(30,39,50,.82); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin: 14px 0; backdrop-filter: blur(3px); }
+    label { display: block; font-weight: 600; margin: 10px 0 4px; }
+    .hint { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    input[type=number], input[type=text], textarea { width: 100%; background: #0f1620; color: var(--txt); border: 1px solid var(--border); border-radius: 8px; padding: 8px; font: inherit; }
+    textarea { min-height: 90px; resize: vertical; }
+    .row { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
+    button { background: var(--blue); color: #fff; border: 0; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; }
+    button.ghost { background: var(--panel); border: 1px solid var(--border); color: var(--txt); margin-left: 8px; }
+    #status, #tgStatus { color: var(--muted); margin-left: 10px; }
+    code { background: #0f1620; padding: 1px 5px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="hero"><h1>🔥 X Fresh Feed Tracker</h1></div>
+  <div class="wrap">
+    <p class="hint">Tracks very fresh posts on <code>x.com</code>. Recommended: a dedicated
+      tracking account that follows <b>only</b> the accounts you want — then its
+      <code>x.com/home</code> feed is already your watchlist.</p>
+
+    <div class="card">
+      <label for="trackedHandles">Tracked accounts (one handle per line or comma-separated)</label>
+      <textarea id="trackedHandles" placeholder="e.g.
+elonmusk
+@solana
+frankdegods"></textarea>
+      <div class="hint">Leave empty = all authors in the feed (freshness filter only).</div>
+
+      <div class="row">
+        <input type="checkbox" id="requireTrackedOnly" />
+        <label for="requireTrackedOnly" style="margin:0">Report ONLY tracked accounts (ignore all others)</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <label for="freshnessMinutes">“Very fresh” = younger than … minutes</label>
+      <input type="number" id="freshnessMinutes" min="1" max="240" value="15" />
+      <div class="hint">Older posts are ignored. For “just now”, set e.g. 5 minutes.</div>
+
+      <label for="autoReloadSeconds">Auto-reload X tabs every … seconds (0 = off)</label>
+      <input type="number" id="autoReloadSeconds" min="0" max="3600" value="0" />
+      <div class="hint">X does not always refresh itself. 60–120 s keeps the feed fresh (tab must stay open).</div>
+
+      <div class="row">
+        <input type="checkbox" id="notifyEnabled" checked />
+        <label for="notifyEnabled" style="margin:0">Desktop notifications (click opens the post)</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Telegram forwarding (English)</h2>
+      <label for="telegramBotToken">Telegram Bot Token</label>
+      <input type="text" id="telegramBotToken" placeholder="123456789:AA...your-token" autocomplete="off" />
+      <label for="telegramChatId">Target group chat ID (bot must be admin)</label>
+      <input type="text" id="telegramChatId" placeholder="-1001234567890" autocomplete="off" />
+      <div class="hint">Add your bot to the group and make it admin. Get the chat id
+        (e.g. via @userinfobot or the bot’s getUpdates).</div>
+      <div class="row">
+        <input type="checkbox" id="telegramEnabled" />
+        <label for="telegramEnabled" style="margin:0">Enable Telegram forwarding of fresh posts</label>
+      </div>
+      <div class="row">
+        <input type="checkbox" id="includeMedia" />
+        <label for="includeMedia" style="margin:0">Attach images as files (album). Off = images and video are sent as <b>links</b> in the message.</label>
+      </div>
+      <button id="testTg" type="button">Send test message</button>
+      <span id="tgStatus" class="hint"></span>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Live API (local)</h2>
+      <label for="apiUrl">Local API URL</label>
+      <input type="text" id="apiUrl" placeholder="http://127.0.0.1:8787" />
+      <div class="hint">The extension POSTs new posts to <code>&lt;url&gt;/ingest</code>.
+        The API serves <code>GET &lt;url&gt;/feed</code> (JSON). Start it with:
+        <code>python3 api_server.py</code></div>
+      <div class="row">
+        <input type="checkbox" id="apiEnabled" />
+        <label for="apiEnabled" style="margin:0">Forward fresh posts to the local API</label>
+      </div>
+    </div>
+
+    <button id="save">Save</button>
+    <span id="status"></span>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>
